@@ -21,18 +21,19 @@
         <h2>Installation</h2>
         <ol>
             <li>Make sure you have sudo privileges.</li>
-            <li>Download and extract the package.</li>
-            <li>Build the Debian package:
-                <pre><code>dpkg-deb --build pyram_deb</code></pre>
-            </li>
+            <li><a href="https://github.com/BrunoRNS/PyRAM/releases/tag/1.0.0">Download the package.</a></li>
             <li>Install the package:
-                <pre><code>sudo dpkg -i pyram_deb.deb</code></pre>
+                <pre><code>sudo dpkg -i PyRAM.deb</code></pre>
             </li>
         </ol>
         
         <h2>Usage</h2>
         <p>After installation, you can run the <code>pyram</code> command:</p>
         <pre><code>sudo pyram /path/to/your/script.py</code></pre>
+        <h2>Why sudo?</h2>
+        <p>To use the mount function: in sudo mount (the_ramdisk). More information in usr/share/doc/src</p>
+        <h2>What if I need other library?</h2>
+        <p>Download the .whl file, extract it, and download by your own the dependencies, and then use it normaly</p>
         
         <h2 class="license">License</h2>
         <p>PYRAM is licensed under the MIT License. See the LICENSE file for more details.</p>
