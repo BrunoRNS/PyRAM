@@ -1,1 +1,1 @@
-information on https://brunorns.github.io/PyRAM/
+Information on https://brunorns.github.io/PyRAM/
