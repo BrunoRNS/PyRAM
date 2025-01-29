@@ -4,7 +4,7 @@ body {
     color: #333;
     margin: 0;
     padding: 0;
-    background: linear-gradient(to bottom, #1c1c1c, #595959), url('cobra_ram.png');
+    background: url('cobra_ram.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
