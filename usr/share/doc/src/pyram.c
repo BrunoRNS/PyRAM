@@ -8,7 +8,7 @@
 #include <sys/stat.h>
 #include <errno.h>
 
-#define PYPY_PATH "/mnt/ramdisk/pypy/bin/pypy.elf"
+#define PYPY_PATH "/mnt/pyram_disk/pypy/bin/pypy.elf"
 #define RAMDISK_PATH "/mnt/pyram_disk"
 #define TAR_FILE_PATH "/usr/lib/pypy.so"
 #define SIZE 188960770
@@ -18,7 +18,7 @@ void execute_pypy(int argc, char *argv[]) {
     char cwd[1024];
     int i;
     if (getcwd(cwd, sizeof(cwd)) == NULL) {
-        perror("Error in cwd");
+        perror("Error in cwd\n");
         exit(EXIT_FAILURE);
     }
     snprintf(command, sizeof(command), "%s ", PYPY_PATH);
@@ -31,14 +31,14 @@ void execute_pypy(int argc, char *argv[]) {
     }
 
     if (system(command) == -1) {
-        perror("Error in pypy.elf");
+        perror("Error in pypy.elf\n");
         exit(EXIT_FAILURE);
     }
 }
 
 void execute_command(const char *command) {
     if (system(command) == -1) {
-        perror("Error while running subprocess");
+        perror("Error while running subprocess\n");
         exit(EXIT_FAILURE);
     }
 }
@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
    char command[256];
    pid = fork();
    if (pid < 0) {
-      printf("Error while creating subprocess");
+      printf("Error while creating subprocess\n");
       exit(EXIT_FAILURE);
    }
    if (pid == 0) {
@@ -58,7 +58,7 @@ int main(int argc, char *argv[]) {
          execute_command(command);
       } else {
          if (mkdir(RAMDISK_PATH, 0777) == -1 && errno != EEXIST) {
-            printf("Error creating /mnt/ramdisk");
+            printf("Error creating /mnt/ramdisk\n");
             exit(EXIT_FAILURE);
          }
       }
@@ -74,7 +74,7 @@ int main(int argc, char *argv[]) {
       if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_SUCCESS) {
          execute_pypy(argc, argv);
       } else {
-         printf("Error while allocating memory in ram for pypy");
+         printf("Error while allocating memory in ram for pypy\n");
       }
    }
    return 0;
