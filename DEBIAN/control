@@ -1,0 +1,9 @@
+Package: pyram
+Version: 1.0
+Section: utils
+Priority: optional
+Architecture: amd64
+Depends: sudo
+Maintainer: Bruno RNS brunorns05@outlook.com
+Description: PYRAM - A lightweight PyPy wrapper for servers
+ PYRAM is an optimized version of PyPy, ideal for servers. It includes Django and PyMySQL pre-installed, eliminating the need for pip, setuptools, or tcl/tk. Executes the PyPy JIT directly in RAM, ensuring high-speed execution. It's recommended to use absolute paths for script execution. Must be run with sudo.
