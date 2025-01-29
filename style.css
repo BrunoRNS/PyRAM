@@ -4,14 +4,18 @@ body {
     color: #333;
     margin: 0;
     padding: 0;
-    background: linear-gradient(to bottom, #1c1c1c, #595959);
+    background: linear-gradient(to bottom, #1c1c1c, #595959), url('cobra_ram.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
     color: #e0e0e0;
 }
 .container {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
-    background: #2e2e2e;
+    background: rgba(46, 46, 46, 0.9); /* Fundo com transparência */
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
