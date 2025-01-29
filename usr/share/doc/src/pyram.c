@@ -9,8 +9,8 @@
 #include <errno.h>
 
 #define PYPY_PATH "/mnt/ramdisk/pypy/bin/pypy.elf"
-#define RAMDISK_PATH "/mnt/ramdisk"
-#define TAR_FILE_PATH "/mnt/PYPY.SO"
+#define RAMDISK_PATH "/mnt/pyram_disk"
+#define TAR_FILE_PATH "/usr/lib/pypy.so"
 #define SIZE 188960770
 
 void execute_pypy(int argc, char *argv[]) {

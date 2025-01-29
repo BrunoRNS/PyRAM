@@ -1,6 +1,0 @@
-#!/bin/bash
-# give sudo to pyram
-chmod +x /usr/bin/pyram
-
-# Create symbolic link
-ln -s /src/PYRAM.ELF /usr/bin/pyram
