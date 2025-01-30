@@ -33,8 +33,12 @@
         <h2>Why sudo?</h2>
         <p>To use the mount function: in sudo mount (the_ramdisk). More information in usr/share/doc/src</p>
         <h2>What if I need other library?</h2>
-        <p>Download the .whl file, extract it, and download by your own the dependencies, and then use it normaly</p>
-        
+        <p>Download the .whl file of your library in PyPI, install PyPy and run:</p>
+        <pre><code>pypy[version] -m ensurepip</code></pre>
+        <p>And then use:</p>
+        <pre><code>pip install your_library.whl --target /path/to/your/script</code></pre>
+        <p>Then you can import your library normaly and run:</p>
+        <pre><code>sudo pyram /path/to/your/script/main.py</code></pre>
         <h2 class="license">License</h2>
         <p>PYRAM is licensed under the MIT License. See the LICENSE file for more details.</p>
         
