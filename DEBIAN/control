@@ -1,8 +1,0 @@
-Package: pyram
-Version: 1.0
-Section: utils
-Priority: optional
-Architecture: amd64
-Depends: libc6 (>= 2.2.5), tar, util-linux
-Maintainer: Bruno RNS <brunorns05@outlook.com>
-Description: PYRAM - A lightweight PyPy wrapper for servers

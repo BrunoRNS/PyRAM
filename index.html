@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PYRAM - Lightweight PyPy Wrapper</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./assets/styles/style.css">
 </head>
 <body>
     <div class="container">
@@ -33,10 +33,9 @@
         <h2>Why sudo?</h2>
         <p>To use the mount function: in sudo mount (the_ramdisk). More information in usr/share/doc/src</p>
         <h2>What if I need other library?</h2>
-        <p>Download the .whl file of your library in PyPI, install PyPy and run:</p>
-        <pre><code>pypy[version] -m ensurepip</code></pre>
+        <p>Download the .whl file of your library in PyPI.</p>
         <p>And then use:</p>
-        <pre><code>pip install your_library.whl --target /path/to/your/script</code></pre>
+        <pre><code>sudo pyram -m pip install /path/to/your_library.whl --target /path/to/your/script</code></pre>
         <p>Then you can import your library normaly and run:</p>
         <pre><code>sudo pyram /path/to/your/script/main.py</code></pre>
         <h2 class="license">License</h2>
