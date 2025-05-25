@@ -9,40 +9,81 @@
 <body>
     <div class="container">
         <h1>PYRAM - Lightweight PyPy Wrapper</h1>
-        <p>PYRAM is an optimized version of PyPy, designed for server environments. It eliminates unnecessary components such as pip, setuptools, and tcl/tk, but includes essential packages like Django and PyMySQL pre-installed. By running the PyPy JIT directly in RAM, PYRAM ensures high-speed execution.</p>
+        <p>
+            PYRAM is a lightweight tool to run Python programs very quickly, especially on servers. It uses <b>PyPy 3.10</b> (a fast Python implementation), removes unnecessary extras, and comes with Django, PyMySQL, and NumPy ready to use. By running the PyPy interpreter directly from your computer's memory (RAM), PYRAM can deliver faster startup and execution in some scenarios.
+        </p>
         <h2>Features</h2>
         <ul>
-            <li>Optimized PyPy wrapper for servers</li>
-            <li>Includes Django and PyMySQL pre-installed</li>
-            <li>Eliminates pip, setuptools, and tcl/tk</li>
-            <li>High-speed execution by running JIT directly in RAM</li>
+            <li>Optimized for servers - minimal footprint and resource usage</li>
+            <li>Includes Django, PyMySQL, and NumPy pre-installed</li>
+            <li>Runs the PyPy interpreter from RAM for fast startup</li>
+            <li>Simple command-line usage</li>
+            <li>Free and open source (MIT License)</li>
         </ul>
         
-        <h2>Installation</h2>
+        <h2>How to Install</h2>
         <ol>
-            <li>Make sure you have sudo privileges.</li>
-            <li><a href="https://github.com/BrunoRNS/PyRAM/releases/tag/1.0.0">Download the package.</a></li>
-            <li>Install the package:
-                <pre><code>sudo dpkg -i PyRAM.deb</code></pre>
+            <li>Make sure you have permission to use <code>sudo</code> on your computer.</li>
+            <li>
+                <a href="https://github.com/BrunoRNS/PyRAM/releases">Download the latest version</a> from the releases page.
+            </li>
+            <li>
+                Open your terminal and install it with this command:<br>
+                <pre><code>sudo dpkg -i PyRAM[version].deb</code></pre>
             </li>
         </ol>
         
-        <h2>Usage</h2>
-        <p>After installation, you can run the <code>pyram</code> command:</p>
+        <h2>How to Use</h2>
+        <p>After installing, you can run your Python script like this:</p>
         <pre><code>sudo pyram /path/to/your/script.py</code></pre>
-        <h2>Why sudo?</h2>
-        <p>To use the mount function: in sudo mount (the_ramdisk). More information in usr/share/doc/src</p>
-        <h2>What if I need other library?</h2>
-        <p>Download the .whl file of your library in PyPI.</p>
-        <p>And then use:</p>
+        <p>
+            <b>Tip:</b> Using <code>sudo</code> lets PYRAM use your computer's memory for the best speed.
+        </p>
+
+        <h2>Adding More Libraries</h2>
+        <p>
+            If you need extra Python libraries, download the <code>.whl</code> file for PyPy 3.10 from PyPI and install it like this:
+        </p>
         <pre><code>sudo pyram -m pip install /path/to/your_library.whl --target /path/to/your/script</code></pre>
-        <p>Then you can import your library normaly and run:</p>
+        <p>
+            Then, just import the library in your script and run it as before:
+        </p>
         <pre><code>sudo pyram /path/to/your/script/main.py</code></pre>
+        <p>
+            For more help and advanced tips, check the <a href="./docs/docs.md">documentation</a>.
+        </p>
+
+        <h2>Benchmarks</h2>
+        <p>
+            Recent benchmarks show that PYRAM matches or slightly outperforms PyPy3 in most scenarios, especially right after boot or on slower disks. For CPU-heavy tasks, both are much faster than standard Python 3. In typical use with SSDs, performance is nearly identical to PyPy3.<br>
+            <a href="./benchmarks/benchmarks.md">See detailed benchmark results and charts</a>.
+        </p>
+        <div class="benchmarks-images">
+            <img src="./benchmarks/data/pyram_linear_fibonacci.png" alt="PYRAM Fibonacci Benchmark" style="max-width:200px;">
+            <img src="./benchmarks/data/pypy3_linear_fibonacci.png" alt="PyPy3 Fibonacci Benchmark" style="max-width:200px;">
+            <img src="./benchmarks/data/python3_linear_fibonacci.png" alt="Python3 Fibonacci Benchmark" style="max-width:200px;">
+        </div>
+
         <h2 class="license">License</h2>
-        <p>PYRAM is licensed under the MIT License. See the LICENSE file for more details.</p>
+        <p>
+            PYRAM is free to use under the MIT License. You can read the full license in the <a href="./LICENSE">LICENSE</a> file.
+        </p>
         
         <h2 class="contributing">Contributing</h2>
-        <p>Contributions are welcome! Please fork the repository and submit a pull request on GitHub.</p>
+        <p>
+            Want to help make PYRAM better? You can contribute by forking the project and sending a pull request on <a href="https://github.com/BrunoRNS/PyRAM">GitHub</a>.
+        </p>
+
+        <footer>
+            <p>
+                &copy; 2025 BrunoRNS. All rights reserved.
+            </p>
+            <p>
+                <a href="https://github.com/BrunoRNS/PyRAM">GitHub Repository</a>
+                <a href="https://github.com/BrunoRNS/">Contact Me</a>
+            </p>
+
+        </footer>
     </div>
 </body>
 </html>

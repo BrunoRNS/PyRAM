@@ -1,10 +1,11 @@
-class foo2:
+class foo1:
 
+	@staticmethod
 	def fooHello() -> str:
 
 		return "hello"
 
-class foo3:
+class foo2:
 
 	def __init__(self, *args, **kwargs) -> None:
 

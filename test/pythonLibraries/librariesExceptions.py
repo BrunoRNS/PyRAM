@@ -1,7 +1,7 @@
 
 class LibException(Exception):
 
-	self.name = "LibException"
+	name = "LibException"
 
 	def __init__(self, *args, **kwargs) -> None:
 

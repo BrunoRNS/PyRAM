@@ -3,26 +3,33 @@
 set -e
 
 # Necessary to create the deb package in some devices
-sudo su
+
+if [ "$EUID" -ne 0 ]; then
+  echo "Please run as root"
+  exit 1
+fi
 
 PKGNAME="pyram"
-VERSION="1.0.1"
+VERSION="2.0.0"
 ARCH="all"
 TMPDIR="./build/${PKGNAME}_${VERSION}"
 
 # Clean previous build
-rm -rf "$TMPDIR" "./build/pyram-out/${PKGNAME}_${VERSION}.deb"
+rm -rf "$TMPDIR" 
+rm -rf "./build/pyram-out/${PKGNAME}_${VERSION}.deb"
 
 # Create directory structure
 mkdir -p "$TMPDIR/DEBIAN"
 mkdir -p "$TMPDIR/usr/share/$PKGNAME"
+mkdir -p "$TMPDIR/usr/bin/"
 
 # Copy source and lib
-cp -r ../src "$TMPDIR/usr/share/$PKGNAME/"
-cp -r ../lib "$TMPDIR/usr/share/$PKGNAME/"
+
+cp -r ./src "$TMPDIR/usr/share/$PKGNAME/"
+cp -r ./lib "$TMPDIR/usr/share/$PKGNAME/"
 
 # Compile src in bin
-gcc -o "$TMPDIR/usr/bin/$PKGNAME/pyram" "$TMPDIR/usr/share/$PKGNAME/src/pyram.c"
+gcc -o "$TMPDIR/usr/bin/pyram" "$TMPDIR/usr/share/$PKGNAME/src/pyram.c"
 
 # Create control file
 cat > "$TMPDIR/DEBIAN/control" << EOF
@@ -38,7 +45,12 @@ EOF
 # Build the package
 dpkg-deb --build "$TMPDIR"
 
+mkdir -p ./build/pyram-out
+
 # Move the .deb to build/
 mv "${TMPDIR}.deb" ./build/pyram-out/
+
+# Clean up
+rm -rf "$TMPDIR"
 
 echo "Debian package created at ./build/pyram-out/${PKGNAME}_${VERSION}.deb"

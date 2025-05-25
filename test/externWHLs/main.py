@@ -1,6 +1,19 @@
+"""
+We have to use in this way because we're creating a directory speccially for matplotlib and numpy.
+
+Running a command based on this you will have to use the same import style:
+
+- pyram -m pip install /path/to/script/${myLibrary}.whl --target /path/to/script/myLibrary/
+
+"""
+
+# NumPy is pre-installed in PyRAM, but type: ignore its neccessary to avoid vs code issues.
+
 import numpy as np # type: ignore
 
-import matplotlib.pyplot as plt # type: ignore
+# Using matplotlib normally because I'm copying the code to the same folder as the matplotlib itself.
+
+from matplotlib import pyplot as plt # type: ignore
 
 class DataGenerator:
     def __init__(self, n_points=100):

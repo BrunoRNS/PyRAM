@@ -3,3 +3,42 @@
 
 # Build out
 pyram-out/
+pyram_1.0.1/
+
+# Temp files
+*.tmp
+*.temp
+
+# Cache files
+*.cache
+*.pdb
+*.pdbx
+*.cif
+
+# Debian package files
+*.deb
+
+# Python cache files
+__pycache__/
+__pycache__/*
+*.pyc
+
+# Test whl decompressed
+numpy/
+matplotlib/
+
+# Test files
+*.out
+*.err
+*.in
+*.out.*
+*.err.*
+*.in.*
+
+# Test data
+*.dat
+*.csv
+
+# Visual Studio Code
+.vscode/
+.vscode/*

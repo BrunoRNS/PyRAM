@@ -11,6 +11,7 @@ class foo1:
 
 class foo2:
 
+	@staticmethod
 	def fooHello() -> str:
 
 		return "hello"

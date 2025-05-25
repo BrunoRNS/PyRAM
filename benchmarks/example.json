@@ -1,0 +1,47 @@
+{
+    "Comment": {
+        "Line1": "This is just an example of a JSON file that could be used to store benchmark data",
+        "Line2": "this comment is not part of the example."
+    },
+
+    "fibonacci": [
+        {"input": 10, "time": 0.00001},
+        {"input": 20, "time": 0.001},
+        {"input": 30, "time": 0.1},
+        {"input": 40, "time": 10.5},
+        {"input": 50, "time": 1200.0}
+    ],
+
+    "manual_sort": [
+        {"input": 100, "time": 0.001},
+        {"input": 1000, "time": 0.05},
+        {"input": 10000, "time": 3.2},
+        {"input": 100000, "time": 320.0},
+        {"input": 1000000, "time": 32000.0}
+    ],
+
+    "sum_large_list": [
+        {"input": 10000, "time": 0.0005},
+        {"input": 100000, "time": 0.005},
+        {"input": 1000000, "time": 0.05},
+        {"input": 10000000, "time": 0.5},
+        {"input": 100000000, "time": 5.0}
+    ],
+
+    "matrix_multiplication": [
+        {"input": 10, "time": 0.01},
+        {"input": 20, "time": 0.08},
+        {"input": 30, "time": 0.27},
+        {"input": 40, "time": 0.64},
+        {"input": 50, "time": 1.25}
+    ],
+
+    "string_concat": [
+        {"input": 1000, "time": 0.001},
+        {"input": 5000, "time": 0.01},
+        {"input": 10000, "time": 0.03},
+        {"input": 50000, "time": 0.2},
+        {"input": 100000, "time": 0.5}
+    ]
+    
+}
