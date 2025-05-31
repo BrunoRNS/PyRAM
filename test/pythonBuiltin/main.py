@@ -1,6 +1,48 @@
+"""
+This module provides utility classes and methods to test Python built-in types, iterables, logic operations, built-in functions/classes, and metaclass behavior.
+Classes
+    Contains static methods to test:
+        - Python built-in types using `isinstance`.
+        - Basic iterable operations such as `sum`, `map`, and list comprehensions.
+        - Basic logical operations (`and`, `or`, `not`).
+        - Built-in functions (`len`, `max`, `min`) and the `object` class.
+    Each test prints the result and raises a custom `pyramBuiltinsError` if a check fails.
+Meta
+    A custom metaclass used for testing metaclass behavior.
+MyClass
+    A class that uses `Meta` as its metaclass.
+TestMetaClass
+    Tests Python metaclass behavior by verifying:
+        - The type of an instance of `MyClass`.
+        - Whether the instance is of type `MyClass`.
+        - The type of `MyClass` itself (should be `Meta`).
+Exceptions
+----------
+pyramBuiltinsError
+    Custom exception raised when a test fails.
+Usage
+-----
+Run this module directly to execute all tests for built-in types, logic, iterables, built-in functions/classes, and metaclasses.
+"""
+
 from testExceptions import pyramBuiltinsError
 
 class Test:
+    """
+    Test
+    A utility class containing static methods to test Python built-in types, iterables, logic operations, and built-in functions/classes.
+    Each test method prints the result of the test and raises a custom `pyramBuiltinsError` if a check fails.
+    Methods
+    -------
+    testBuiltinTypes() -> None
+        Tests the correct identification of Python built-in types using `isinstance`.
+    testIterables() -> None
+        Tests basic iterable operations such as `sum`, `map`, and list comprehensions.
+    testLogic() -> None
+        Tests basic logical operations (`and`, `or`, `not`).
+    testBuiltinFuncClass() -> None
+        Tests built-in functions (`len`, `max`, `min`) and the `object` class.
+    """
 
     @staticmethod
     def testBuiltinTypes() -> None:
@@ -109,6 +151,23 @@ class MyClass(metaclass=Meta):
     pass
 
 class TestMetaClass:
+    """
+    A test class for verifying Python metaclass behavior.
+
+    Attributes:
+        myclass (MyClass): An instance of MyClass to be used in metaclass tests.
+
+    Methods:
+        __init__(*args, **kwargs):
+            Initializes the TestMetaClass instance and creates a MyClass object.
+
+        testMetaClass():
+            Tests the behavior of metaclasses by checking:
+                - The type of the myclass instance.
+                - Whether myclass is an instance of MyClass.
+                - The type of the MyClass itself (should be Meta).
+            Prints the result of the tests or an error message if a test fails.
+    """
     # Test metaclasses
 
     def __init__(self, *args, **kwargs) -> None:
@@ -137,6 +196,7 @@ class TestMetaClass:
             print("  Metaclasses: FAIL", e)
 
 if __name__ == "__main__":
+
 
     Test.testBuiltinTypes()
     Test.testLogic()

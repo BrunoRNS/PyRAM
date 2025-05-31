@@ -48,6 +48,17 @@ except Exception as e:
 try:
 
 	class exampleABC(ABC):
+		"""
+		An abstract base class that defines the interface for working with Foo objects.
+
+		Methods
+		-------
+		foo() -> Foo
+			Abstract method that should return an instance of Foo.
+
+		analyzeFoo() -> None
+			Abstract method that should analyze a Foo instance.
+		"""
 
 		@abstractmethod
 		def foo(self) -> Foo: ...

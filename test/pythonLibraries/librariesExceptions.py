@@ -1,5 +1,16 @@
 
 class LibException(Exception):
+	"""
+	Custom exception class for errors encountered while testing Python default libraries.
+
+	Attributes:
+		name (str): Name of the exception class.
+
+	Methods:
+		__init__(*args, **kwargs): Initializes the exception instance.
+		__str__(): Returns a string representation of the exception, including the error message,
+				   the class name, and the instance's attribute dictionary.
+	"""
 
 	name = "LibException"
 

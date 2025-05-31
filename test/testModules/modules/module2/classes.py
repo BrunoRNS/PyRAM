@@ -6,6 +6,16 @@ class foo1:
 		return "hello"
 
 class foo2:
+	"""
+	A simple class that stores and displays a message.
+
+	Attributes:
+		msg (str): The message to be displayed, initialized to "hello".
+
+	Methods:
+		show() -> str:
+			Returns the stored message.
+	"""
 
 	def __init__(self, *args, **kwargs) -> None:
 
