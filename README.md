@@ -1,7 +1,7 @@
 # PYRAM
 
-**Version:** [latest](https://github.com/BrunoRNS/PyRAM/releases/latest)  
-Official site: [https://github.com/BrunoRNS/PyRAM](https://github.com/BrunoRNS/PyRAM)
+**Version:** [latest](https://github.com/BrunoRNS/PyRAM/releases/latest).
+Official site: [https://github.com/BrunoRNS/PyRAM](https://github.com/BrunoRNS/PyRAM).
 
 ---
 
@@ -72,7 +72,7 @@ MIT License. See the [LICENSE](./LICENSE) file for details.
 
 ## Special Thanks
 
-- Python and PyPy development teams
-- Professors, family, friends, and everyone who contributed or supported this project
+- Python and PyPy development teams.
+- Professors, family, friends, and everyone who contributed or supported this project.
 
 ---
