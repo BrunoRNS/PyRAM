@@ -3,11 +3,9 @@
 **Version:** [latest](https://github.com/BrunoRNS/PyRAM/releases/latest).
 Official site: [https://github.com/BrunoRNS/PyRAM](https://github.com/BrunoRNS/PyRAM).
 
----
+## Description
 
 **PYRAM** is a lightweight wrapper for PyPy 3.10 that runs your Python scripts directly from RAM for improved performance. It is optimized for server environments, includes Django, PyMySQL, and NumPy, and removes unnecessary components for a smaller footprint.
-
----
 
 ## Installation
 
@@ -24,8 +22,6 @@ Official site: [https://github.com/BrunoRNS/PyRAM](https://github.com/BrunoRNS/P
    sudo pyram /path/to/your_script.py
    ```
 
----
-
 ## How It Works
 
 - Checks for root privileges (sudo is required to mount the RAM disk).
@@ -33,8 +29,6 @@ Official site: [https://github.com/BrunoRNS/PyRAM](https://github.com/BrunoRNS/P
 - Extracts the PyPy binary from `lib/pypy.so` into the RAM disk.
 - Runs your script using PyPy, passing all arguments.
 - Cleans up after execution.
-
----
 
 ## Benchmarks
 
@@ -56,23 +50,15 @@ Recent benchmarks show that **PYRAM** matches or slightly outperforms PyPy3 in m
 ![PyPy3 Fibonacci Benchmark](./benchmarks/data/pypy3_linear_fibonacci.png)
 ![Python3 Fibonacci Benchmark](./benchmarks/data/python3_linear_fibonacci.png)
 
----
-
 ## Documentation
 
 For more information, advanced usage, and tips for adding libraries, see the [documentation](./docs/docs.md).
-
----
 
 ## License
 
 MIT License. See the [LICENSE](./LICENSE) file for details.
 
----
-
 ## Special Thanks
 
 - Python and PyPy development teams.
 - Professors, family, friends, and everyone who contributed or supported this project.
-
----
