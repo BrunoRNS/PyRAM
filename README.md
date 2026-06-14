@@ -35,13 +35,13 @@ Official site: [https://github.com/BrunoRNS/PyRAM](https://github.com/BrunoRNS/P
 Recent benchmarks show that **PYRAM** matches or slightly outperforms PyPy3 in most scenarios, especially right after boot or on slower disks, and both PyRAM and PyPy overtakes python in tests.
 
 | Test                  | PYRAM Score | PyPy3 Score | Python3 Score |
-|-----------------------|-------------|-------------|--------------|
-| fibonacci             | 6.19        | 6.38        | 0.80         |
-| manual_sort           | 0.24        | 0.22        | 0.012        |
-| sum_large_list        | 5,025.11    | 1,513.10    | 274.99       |
-| matrix_multiplication | 1,221.97    | 1,217.10    | 224.66       |
-| string_concat         | 3.29        | 1.49        | 249.38       |
-| **Average Score**     | **1251.36** | **547.66**  | **149.97**   |
+|-----------------------|-------------|-------------|---------------|
+| fibonacci             | 6.19        | 6.38        | 0.80          |
+| manual_sort           | 0.24        | 0.22        | 0.012         |
+| sum_large_list        | 5,025.11    | 1,513.10    | 274.99        |
+| matrix_multiplication | 1,221.97    | 1,217.10    | 224.66        |
+| string_concat         | 3.29        | 1.49        | 249.38        |
+| **Average Score**     | **1251.36** | **547.66**  | **149.97**    |
 
 - **PYRAM** was faster in most tests and had a higher average score in recent runs.
 - For detailed charts and more info, see [benchmarks/benchmarks.md](./benchmarks/benchmarks.md).

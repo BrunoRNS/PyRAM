@@ -55,7 +55,7 @@ class JsonToLinearGraphic:
 
         for test_name in self.data.keys():
 
-            if not isinstance(self.data[test_name], list):
+            if not isinstance(self.data[test_name], list): # pyright: ignore[reportUnnecessaryIsInstance]
 
                 raise ValueError(f"Invalid data format for test '{test_name}'. Expected a list.")
             
@@ -102,13 +102,13 @@ class JsonToLinearGraphic:
         :param values: Values for the y-axis.
         """
 
-        plt.figure(figsize=(10, 6))
-        plt.plot(labels, values, marker='o', linestyle='-', color='b')
+        plt.figure(figsize=(10, 6)) # pyright: ignore
+        plt.plot(labels, values, marker='o', linestyle='-', color='b') # pyright: ignore
 
         self._set_plot_labels(test)
         self._save_plot(test)
 
-        plt.close()
+        plt.close() # pyright: ignore
 
     def _set_plot_labels(self, test_name: str):
         """
@@ -120,13 +120,13 @@ class JsonToLinearGraphic:
         for better appearance.
         """
 
-        plt.xlabel('Input Size')
-        plt.ylabel('Time (seconds)')
-        plt.title(test_name)
+        plt.xlabel('Input Size') # pyright: ignore
+        plt.ylabel('Time (seconds)') # pyright: ignore
+        plt.title(test_name) # pyright: ignore
 
-        plt.grid(True)
+        plt.grid(True) # pyright: ignore
 
-        plt.tight_layout()
+        plt.tight_layout() # pyright: ignore
 
     def _save_plot(self, test_name: str):
         """
@@ -144,7 +144,7 @@ class JsonToLinearGraphic:
         output_image = out_path / f'{self.output_image}_{test_name}.png'
         makedirs(str(output_image.parent), exist_ok=True)
 
-        plt.savefig(output_image)
+        plt.savefig(output_image) # pyright: ignore
 
 if __name__ == "__main__":
 

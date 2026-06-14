@@ -183,20 +183,20 @@ This libraries you do not have to install using WHL packages, and you can import
 
 ### PIP List Output
 
-Package           Version
------------------ -------;
-asgiref           3.8.1
-cffi              1.17.0
-Django            5.1.5
-greenlet          0.4.13
-hpy               0.9.0
-numpy             2.2.6
-pip               25.1.1
-PyMySQL           1.1.1
-readline          6.2.4.1
-setuptools        65.5.0
-sqlparse          0.5.3
-typing_extensions 4.12.2
+Package           | Version |
+------------------|---------|
+asgiref           | 3.8.1   |
+cffi              | 1.17.0  |
+Django            | 5.1.5   |
+greenlet          | 0.4.13  |
+hpy               | 0.9.0   |
+numpy             | 2.2.6   |
+pip               | 25.1.1  |
+PyMySQL           | 1.1.1   |
+readline          | 6.2.4.1 |
+setuptools        | 65.5.0  |
+sqlparse          | 0.5.3   |
+typing_extensions | 4.12.2  |
 
 ### Step by Step for extending PyRAM with other libraries
 
