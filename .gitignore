@@ -48,3 +48,4 @@ matplotlib/
 
 # PyRAM
 pyram_*/
+build/pyram
