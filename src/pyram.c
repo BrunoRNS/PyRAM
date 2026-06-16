@@ -33,6 +33,14 @@ SOFTWARE.
 #include <errno.h>
 #include <stdbool.h>
 
+/**
+ * Duplicate a C string into heap-allocated memory.
+ *
+ * src: source string to copy. Must be a null-terminated string.
+ *
+ * Returns a pointer to the newly allocated duplicate string,
+ * or NULL if src is NULL or allocation fails.
+ */
 static char *duplicate_string(const char *src)
 {
   if (!src)
@@ -54,29 +62,55 @@ static char *duplicate_string(const char *src)
 #define TAR_FILE_PATH "/usr/share/pyram/lib/pypy.so"
 #define PYFILE_RAMDISK_PATH "/mnt/pyram_pyfile_ramdisk"
 
-// 360MB You shall need at least more than 360MB of ram to run pyram, I would recommend 2GB or more
+/**
+ * SIZE = 360MB
+ * You shall need at least more than 360MB of ram to run pyram,
+ * I would recommend 2GB or more.
+ */
 #define SIZE 377487360
 
 static const char *USAGE_MESSAGE = "Usage: [--toram] [--args|-a] <python_file.py> [args...]\nOr: -m||--help||--version [args...]";
 
-// Raise an error message and exit
+/**
+ * Print a failure message using perror and terminate the program.
+ *
+ * message: descriptive error text for the failing operation.
+ */
 void __raise__(const char *message)
 {
   perror(message);
   exit(EXIT_FAILURE);
 }
 
+/**
+ * Check whether a command-line token represents a Python file.
+ *
+ * arg: pointer to the token string to inspect.
+ *
+ * Returns true if the token contains the substring ".py".
+ */
 static bool has_python_extension(const char *arg)
 {
   return arg && strstr(arg, ".py") != NULL;
 }
 
+/**
+ * Print the usage message to stderr and terminate with failure.
+ */
 static void print_usage_and_exit(void)
 {
   fprintf(stderr, "%s\n", USAGE_MESSAGE);
   exit(EXIT_FAILURE);
 }
 
+/**
+ * Execute a shell command, checking for execution errors.
+ *
+ * command: shell command string to execute using system().
+ *
+ * If system() fails or the command exits with a non-zero status,
+ * the program terminates with a fatal error.
+ */
 void execute_command(const char *command)
 {
   int ret = system(command);
@@ -92,38 +126,49 @@ void execute_command(const char *command)
   }
 }
 
+/**
+ * Check whether the current process is running as root.
+ *
+ * Returns true if the effective user ID is 0.
+ */
 bool is_sudo()
 {
   return (geteuid() == 0);
 }
 
+/**
+ * Build and run the PyPy interpreter command for a Python script.
+ *
+ * use_toram: true when the Python file has already been loaded into RAM disk.
+ * py_file_name: base name of the Python script file.
+ * pyfile_path: directory path to the script file when not using RAM disk.
+ * args: optional additional script arguments to pass to PyPy.
+ */
 void execute_pypy(bool use_toram, const char *py_file_name, const char *pyfile_path, const char *args)
 {
   char command[2048];
-  char cwd[1024];
-  const char *target_path = use_toram ? PYFILE_RAMDISK_PATH : pyfile_path;
-
-  if (!use_toram && pyfile_path[0] == '/')
-  {
-    if (getcwd(cwd, sizeof(cwd)) == NULL)
-    {
-      __raise__("Error in cwd\n");
-    }
-    target_path = cwd;
-  }
+  const char *target_dir = use_toram ? PYFILE_RAMDISK_PATH : (pyfile_path[0] != '\0' ? pyfile_path : ".");
 
   if (args && args[0] != '\0')
   {
-    snprintf(command, sizeof(command), "%s %s/%s %s", PYPY_PATH, target_path, py_file_name, args);
+    snprintf(command, sizeof(command), "cd %s && %s %s %s", target_dir, PYPY_PATH, py_file_name, args);
   }
   else
   {
-    snprintf(command, sizeof(command), "%s %s/%s", PYPY_PATH, target_path, py_file_name);
+    snprintf(command, sizeof(command), "cd %s && %s %s", target_dir, PYPY_PATH, py_file_name);
   }
 
   execute_command(command);
 }
 
+/**
+ * Copy the Python file into a temporary RAM disk directory.
+ *
+ * python_file: path to the original .py file on disk.
+ *
+ * If the RAM disk directory does not exist, it is created and mounted,
+ * then the file is copied into the RAM disk so it can be executed from memory.
+ */
 void allocate_python_file_to_ram(const char *python_file)
 {
 
@@ -180,11 +225,15 @@ void allocate_python_file_to_ram(const char *python_file)
   fclose(dst);
 }
 
+/**
+ * Unmount and remove the temporary RAM disk created for the Python file.
+ *
+ * This will remove the mounted directory at PYFILE_RAMDISK_PATH if it exists.
+ */
 void free_python_file_ramdisk(void)
 {
   char cmd[256];
 
-  // Unmount and remove the RAM disk directory
   if (access(PYFILE_RAMDISK_PATH, F_OK) == 0)
   {
     snprintf(cmd, sizeof(cmd), "umount %s && rm -rf %s", PYFILE_RAMDISK_PATH, PYFILE_RAMDISK_PATH);
@@ -199,6 +248,11 @@ typedef struct
   char *filename;
 } PyFileInfo;
 
+/**
+ * Free the dynamically allocated members of a PyFileInfo instance.
+ *
+ * info: pointer to the PyFileInfo struct whose members should be freed.
+ */
 static void free_pyfile_info(PyFileInfo *info)
 {
   if (info)
@@ -210,6 +264,16 @@ static void free_pyfile_info(PyFileInfo *info)
   }
 }
 
+/**
+ * Locate the first Python file argument in argv and split it into components.
+ *
+ * argc, argv: command-line arguments from main().
+ *
+ * Returns a PyFileInfo containing:
+ *   fullpath  - the complete file path given on the command line
+ *   directory - the directory portion of the file path, or "" for a file in CWD
+ *   filename  - the base file name component
+ */
 static PyFileInfo parse_python_file(int argc, char *argv[])
 {
   PyFileInfo info = {NULL, NULL, NULL};
@@ -260,6 +324,16 @@ static PyFileInfo parse_python_file(int argc, char *argv[])
   return info;
 }
 
+/**
+ * Build the arguments string passed to the Python script when --args or -a is used.
+ *
+ * argc, argv: command-line arguments from main().
+ * args: output buffer to receive the joined script arguments.
+ * size: size of the output buffer.
+ *
+ * The function scans for "--args" or "-a", finds the next Python file token,
+ * and concatenates any following tokens separated by spaces.
+ */
 static void build_script_args(int argc, char *argv[], char *args, size_t size)
 {
   size_t len = 0;
@@ -290,6 +364,15 @@ static void build_script_args(int argc, char *argv[], char *args, size_t size)
   }
 }
 
+/**
+ * Validate the top-level command-line arguments.
+ *
+ * argc, argv: command-line arguments from main().
+ *
+ * This function checks for supported options such as --toram, --args, -a,
+ * -m, --help, and --version. If arguments are invalid, it prints usage
+ * information and exits.
+ */
 void validate_arguments(int argc, char *argv[])
 {
   if (argc < 2)
@@ -357,13 +440,18 @@ void validate_arguments(int argc, char *argv[])
   print_usage_and_exit();
 }
 
+/**
+ * Print the program version to stdout and exit successfully.
+ */
 void print_version_and_exit()
 {
-
   printf("PyRAM version 2.0.0\n");
   exit(EXIT_SUCCESS);
 }
 
+/**
+ * Print the detailed help text for the program and exit successfully.
+ */
 void print_help_and_exit()
 {
   printf(
@@ -420,6 +508,11 @@ void print_help_and_exit()
   exit(EXIT_SUCCESS);
 }
 
+/**
+ * Ensure the current process is running with root privileges.
+ *
+ * Exits with a failure message if geteuid() is not zero.
+ */
 void ensure_root()
 {
   if (!is_sudo())
@@ -429,6 +522,13 @@ void ensure_root()
   }
 }
 
+/**
+ * Create or reset the RAM disk used by the PyPy interpreter.
+ *
+ * The function removes any existing RAM disk contents at RAMDISK_PATH,
+ * mounts a new tmpfs at that location, extracts the PyPy archive there,
+ * and makes the interpreter executable.
+ */
 void setup_pypy_ramdisk()
 {
   char command[256];
@@ -459,7 +559,15 @@ void setup_pypy_ramdisk()
   execute_command(command);
 }
 
-// Allocate Python file to RAM if needed
+/**
+ * Detect and process the --toram option.
+ *
+ * argc, argv: command-line arguments from main().
+ * use_toram: output flag set to true when --toram is present.
+ *
+ * When --toram is requested, the existing Python RAM disk state is reset
+ * so the script can be copied into RAM before execution.
+ */
 void handle_toram(int argc, char *argv[], bool *use_toram)
 {
   if (argc > 1 && strcmp(argv[1], "--toram") == 0)
@@ -469,6 +577,15 @@ void handle_toram(int argc, char *argv[], bool *use_toram)
   }
 }
 
+/**
+ * Main entry point for the program.
+ *
+ * argc, argv: standard command-line arguments.
+ *
+ * This function validates arguments, enforces root privileges, prepares the
+ * PyPy RAM disk, optionally loads the Python script into RAM, and then
+ * executes the requested script or module.
+ */
 int main(int argc, char *argv[])
 {
   pid_t pid;
@@ -529,7 +646,6 @@ int main(int argc, char *argv[])
 
         __raise__("Error while allocating memory in ram for pypy\n");
       }
-
     }
 
     exit(EXIT_SUCCESS);

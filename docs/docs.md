@@ -4,6 +4,8 @@
 
 **PYRAM** is a lightweight, optimized wrapper for **PyPy 3.10**, designed specifically for high speed environments. It streamlines PyPy by removing heavy unnecessary components for high speed tests (such as tcl/tk) and includes usefull packages like Django, PyMySQL, NumPy pre-installed. PYRAM achieves high-speed execution by running the PyPy JIT directly in RAM.
 
+The project README now includes a quick-start installation summary and benchmark overview for users who want the fastest path to getting started. This documentation expands on that README guidance with additional build, packaging, and test details.
+
 ---
 
 ## Features
@@ -49,17 +51,59 @@ The program requires `sudo` privileges to mount the RAM disk.
 
 If you want to build from source execute this command:
 
-**WARNING**: You **have to** run exactly in the root directory of the repo, otherwise it wont recognize the lib and src folders.
+**WARNING**: You **have to** run exactly in the root directory of the repo, otherwise it won't recognize the lib and src folders.
 
 ```sh
-sudo bash ./build/build
+make package
 ```
 
-This generates a deb package in ./build/pyram-out/
-Then you just have to install the package:
+The Makefile in the project root simplifies the build and packaging process by compiling the binary and creating the Debian package in one step.
+
+This generates a deb package in `./build/pyram-out/`.
+Then install the package with:
 
 ```sh
-sudo dpkg -i ./build/pyram-out/package-name.deb
+sudo dpkg -i ./build/pyram-out/pyram_2.1.0.deb
+```
+
+If you only want to compile the binary without packaging, run:
+
+```sh
+make build
+```
+
+If you wish to install the compiled binary directly into `/usr/bin`, use:
+
+```sh
+sudo make install
+```
+
+This `make install` step now installs the `pypy.so` runtime archive into `/usr/share/pyram/lib/pypy.so`, which is required by the `pyram` executable.
+
+### Makefile test targets
+
+The repository now includes Makefile targets for running tests and benchmarks without installing the package.
+
+- `make test`
+  - Builds the `pyram` binary and runs the existing `test/testAll.sh` suite.
+- `make speed-test`
+  - Builds the `pyram` binary and runs the benchmark speed tests, writing outputs to the default `benchmarks/tests` and `benchmarks/data` directories.
+- `make speed-test-nooverride`
+  - Builds the `pyram` binary and runs the benchmark speed tests without overwriting existing benchmark outputs by creating timestamped directories for results.
+- `make install-deb`
+  - Builds the Debian package and installs it with `dpkg -i`.
+
+These targets do not install the package; they only compile the binary first and then execute the tests locally.
+
+The Makefile now preserves build output permissions so `make clean` can run without sudo after a normal build or package run.
+
+For example:
+
+```sh
+make test
+make speed-test
+make speed-test-nooverride
+make install-deb
 ```
 
 ---
@@ -75,10 +119,16 @@ pyram --version
 
 You should see the version information printed.
 
-To run the included tests, execute:
+To run the included tests directly, execute:
 
 ```sh
 sudo bash ./test/testAll.sh
+```
+
+For the Makefile-managed flow, use:
+
+```sh
+make test
 ```
 
 ---

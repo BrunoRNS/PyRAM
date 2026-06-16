@@ -45,3 +45,6 @@ matplotlib/
 
 # General
 .Identifier
+
+# PyRAM
+pyram_*/

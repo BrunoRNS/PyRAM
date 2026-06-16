@@ -9,6 +9,16 @@ Official site: [https://github.com/BrunoRNS/PyRAM](https://github.com/BrunoRNS/P
 
 ## Installation
 
+### Requirements
+
+Debian-based Linux systems with AMD64 (x86-64) architecture.
+Requires `tar`, `mount`, `cp`, `cd`, `rm` and `umount` commands (available by default on most Linux distributions).
+Requires sudo privileges.
+
+> Note: you can use it on other linux distributions, but you have to install the binaries manually, check the [docs](./docs/docs.md) for more info.
+
+### How to Install
+
 1. Download the latest `.deb` package from [the releases page](https://github.com/BrunoRNS/PyRAM/releases/latest).
 2. Install it:
 
@@ -16,7 +26,15 @@ Official site: [https://github.com/BrunoRNS/PyRAM](https://github.com/BrunoRNS/P
    sudo dpkg -i PyRAM_[version].deb
    ```
 
-3. Run your script:
+3. If you are installing from source instead of a Debian package, use:
+
+   ```sh
+   sudo make install
+   ```
+
+   This installs both the `pyram` binary to `/usr/bin/pyram` and the required runtime archive to `/usr/share/pyram/lib/pypy.so`.
+
+4. Run your script:
 
    ```sh
    sudo pyram /path/to/your_script.py
