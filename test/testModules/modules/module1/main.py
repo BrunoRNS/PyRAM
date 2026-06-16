@@ -1,5 +1,8 @@
 # Test if this can be imported normally
 
+from typing import Any, Dict
+
+
 class ShouldntError(Exception):
 	"""
 	Custom exception to indicate that an error should not have occurred.
@@ -12,7 +15,7 @@ class ShouldntError(Exception):
 		**kwargs: Arbitrary keyword arguments passed to the base Exception.
 	"""
 
-	def __init__(self, *args, **kwargs) -> None:
+	def __init__(self, *args: Any, **kwargs: Dict[str, Any]) -> None:
 
 		super().__init__(*args, **kwargs)
 

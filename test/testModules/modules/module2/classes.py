@@ -1,3 +1,6 @@
+from typing import Any, Dict
+
+
 class foo1:
 
 	@staticmethod
@@ -17,7 +20,7 @@ class foo2:
 			Returns the stored message.
 	"""
 
-	def __init__(self, *args, **kwargs) -> None:
+	def __init__(self, *args: Any, **kwargs: Dict[str, Any]) -> None:
 
 		self.msg = "hello"
 

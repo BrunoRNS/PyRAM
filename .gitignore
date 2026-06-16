@@ -42,3 +42,6 @@ matplotlib/
 # Visual Studio Code
 .vscode/
 .vscode/*
+
+# General
+.Identifier
