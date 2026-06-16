@@ -4,7 +4,7 @@ body {
     color: #333;
     margin: 0;
     padding: 0;
-    background: url('../img/cobra_ram.png');
+    background: url('../img/pyram_logo.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -40,4 +40,15 @@ pre {
 }
 .license, .contributing {
     margin-top: 40px;
+}
+a {
+    color: #007f00;
+    text-decoration: none;
+}
+a:hover {
+    color: #005a00;
+    text-decoration: underline;
+}
+a:visited {
+    color: #004000;
 }

@@ -42,3 +42,10 @@ matplotlib/
 # Visual Studio Code
 .vscode/
 .vscode/*
+
+# General
+.Identifier
+
+# PyRAM
+pyram_*/
+build/pyram

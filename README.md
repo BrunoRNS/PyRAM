@@ -9,6 +9,16 @@ Official site: [https://github.com/BrunoRNS/PyRAM](https://github.com/BrunoRNS/P
 
 ## Installation
 
+### Requirements
+
+Debian-based Linux systems with AMD64 (x86-64) architecture.
+Requires `tar`, `mount`, `cp`, `cd`, `rm` and `umount` commands (available by default on most Linux distributions).
+Requires sudo privileges.
+
+> Note: you can use it on other linux distributions, but you have to install the binaries manually, check the [docs](./docs/docs.md) for more info.
+
+### How to Install
+
 1. Download the latest `.deb` package from [the releases page](https://github.com/BrunoRNS/PyRAM/releases/latest).
 2. Install it:
 
@@ -16,7 +26,15 @@ Official site: [https://github.com/BrunoRNS/PyRAM](https://github.com/BrunoRNS/P
    sudo dpkg -i PyRAM_[version].deb
    ```
 
-3. Run your script:
+3. If you are installing from source instead of a Debian package, use:
+
+   ```sh
+   sudo make install
+   ```
+
+   This installs both the `pyram` binary to `/usr/bin/pyram` and the required runtime archive to `/usr/share/pyram/lib/pypy.so`.
+
+4. Run your script:
 
    ```sh
    sudo pyram /path/to/your_script.py
@@ -35,13 +53,13 @@ Official site: [https://github.com/BrunoRNS/PyRAM](https://github.com/BrunoRNS/P
 Recent benchmarks show that **PYRAM** matches or slightly outperforms PyPy3 in most scenarios, especially right after boot or on slower disks, and both PyRAM and PyPy overtakes python in tests.
 
 | Test                  | PYRAM Score | PyPy3 Score | Python3 Score |
-|-----------------------|-------------|-------------|--------------|
-| fibonacci             | 6.19        | 6.38        | 0.80         |
-| manual_sort           | 0.24        | 0.22        | 0.012        |
-| sum_large_list        | 5,025.11    | 1,513.10    | 274.99       |
-| matrix_multiplication | 1,221.97    | 1,217.10    | 224.66       |
-| string_concat         | 3.29        | 1.49        | 249.38       |
-| **Average Score**     | **1251.36** | **547.66**  | **149.97**   |
+|-----------------------|-------------|-------------|---------------|
+| fibonacci             | 6.19        | 6.38        | 0.80          |
+| manual_sort           | 0.24        | 0.22        | 0.012         |
+| sum_large_list        | 5,025.11    | 1,513.10    | 274.99        |
+| matrix_multiplication | 1,221.97    | 1,217.10    | 224.66        |
+| string_concat         | 3.29        | 1.49        | 249.38        |
+| **Average Score**     | **1251.36** | **547.66**  | **149.97**    |
 
 - **PYRAM** was faster in most tests and had a higher average score in recent runs.
 - For detailed charts and more info, see [benchmarks/benchmarks.md](./benchmarks/benchmarks.md).

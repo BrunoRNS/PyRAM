@@ -2,7 +2,7 @@ import time
 import json
 import random
 
-def fib_recursive(n):
+def fib_recursive(n: int) -> int:
     """
     Calculate the nth Fibonacci number using a recursive approach.
 
@@ -25,7 +25,7 @@ def fib_recursive(n):
         return n
     return fib_recursive(n-1) + fib_recursive(n-2)
 
-def manual_sort(lst):
+def manual_sort(lst: list[int]):
     """
     Sorts a list in ascending order using the bubble sort algorithm.
     Args:
@@ -48,7 +48,7 @@ def manual_sort(lst):
 
     return lst
 
-def sum_large_list(lst):
+def sum_large_list(lst: list[int]):
     """
     Calculates the sum of all elements in a given list.
     Args:
@@ -65,7 +65,7 @@ def sum_large_list(lst):
 
     return total
 
-def matrix_multiplication(size):
+def matrix_multiplication(size: int):
     """
     Performs matrix multiplication of two randomly generated square matrices of the given size.
     Args:
@@ -89,7 +89,7 @@ def matrix_multiplication(size):
 
     return result
 
-def string_concat(n):
+def string_concat(n: int):
     """
     Concatenates the string representations of integers from 0 to n-1.
     Args:
@@ -120,7 +120,7 @@ def benchmark():
         None. Prints the benchmark results as a formatted JSON string.
     """
 
-    results = dict()
+    results: dict[str, list[dict[str, int|float]]] = dict()
 
     # Fibonacci
     fib_inputs = [10, 15, 20, 30, 35]

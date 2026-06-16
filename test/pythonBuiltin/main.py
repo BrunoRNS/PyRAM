@@ -25,7 +25,10 @@ Usage
 Run this module directly to execute all tests for built-in types, logic, iterables, built-in functions/classes, and metaclasses.
 """
 
+from typing import Any, Dict
+
 from testExceptions import pyramBuiltinsError
+
 
 class Test:
     """
@@ -52,26 +55,27 @@ class Test:
 
             tests = {
 
-                isinstance(42, int),
-                isinstance(3.14, float),
-                isinstance("hello", str),
-                isinstance([1, 2, 3], list),
-                isinstance((1, 2), tuple),
-                isinstance({1, 2}, set),
-                isinstance({'a': 1}, dict),
+                isinstance(42, int),  # pyright: ignore
+                isinstance(3.14, float),  # pyright: ignore
+                isinstance("hello", str),  # pyright: ignore
+                isinstance([1, 2, 3], list),  # pyright: ignore
+                isinstance((1, 2), tuple),  # pyright: ignore
+                isinstance({1, 2}, set),  # pyright: ignore
+                isinstance({'a': 1}, dict),  # pyright: ignore
 
             }
 
             if not (False in tests):
 
                 print("  Built-in types: OK")
-            
-            else: raise pyramBuiltinsError("Isinstance failed while verifying types.") 
+
+            else:
+                raise pyramBuiltinsError(
+                    "Isinstance failed while verifying types.")
 
         except pyramBuiltinsError as e:
 
             print("  Built-in types: FAIL", e)
-
 
     @staticmethod
     def testIterables() -> None:
@@ -84,13 +88,13 @@ class Test:
 
             if sum(lst) != 6:
                 raise pyramBuiltinsError("sum failed")
-            
+
             if list(map(str, lst)) != ['1', '2', '3']:
                 raise pyramBuiltinsError("map failed")
-            
+
             if [x for x in lst if x > 1] != [2, 3]:
                 raise pyramBuiltinsError("list comprehension failed")
-            
+
             print("  Iterables: OK")
 
         except pyramBuiltinsError as e:
@@ -107,17 +111,17 @@ class Test:
 
             if not (True and not False):
                 raise pyramBuiltinsError("logic 1 failed")
-            
+
             if True and False:
                 raise pyramBuiltinsError("logic 2 failed")
-            
+
             if not (True or False):
                 raise pyramBuiltinsError("logic 3 failed")
-            
+
             print("  Logic: OK")
 
         except pyramBuiltinsError as e:
-            
+
             print("  Logic: FAIL", e)
 
     @staticmethod
@@ -134,7 +138,7 @@ class Test:
             if min([1, 5, 2]) != 1:
                 raise pyramBuiltinsError("min failed")
 
-            if not isinstance(object(), object):
+            if not isinstance(object(), object):  # pyright: ignore
                 raise pyramBuiltinsError("isinstance object failed")
 
             print("  Built-in functions and classes: OK")
@@ -147,8 +151,10 @@ class Test:
 class Meta(type):
     pass
 
+
 class MyClass(metaclass=Meta):
     pass
+
 
 class TestMetaClass:
     """
@@ -158,7 +164,7 @@ class TestMetaClass:
         myclass (MyClass): An instance of MyClass to be used in metaclass tests.
 
     Methods:
-        __init__(*args, **kwargs):
+        __init__(*args: Any, **kwargs: Any):
             Initializes the TestMetaClass instance and creates a MyClass object.
 
         testMetaClass():
@@ -170,9 +176,8 @@ class TestMetaClass:
     """
     # Test metaclasses
 
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Dict[str, Any]) -> None:
         self.myclass = MyClass()
-
 
     def testMetaClass(self) -> None:
 
@@ -183,7 +188,7 @@ class TestMetaClass:
             if type(self.myclass) is not MyClass:
                 raise pyramBuiltinsError("type(obj) failed")
 
-            if not isinstance(self.myclass, MyClass):
+            if not isinstance(self.myclass, MyClass):  # pyright: ignore
                 raise pyramBuiltinsError("isinstance(obj) failed")
 
             if type(MyClass) is not Meta:
@@ -195,8 +200,8 @@ class TestMetaClass:
 
             print("  Metaclasses: FAIL", e)
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
 
     Test.testBuiltinTypes()
     Test.testLogic()

@@ -10,7 +10,7 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 PKGNAME="pyram"
-VERSION="2.0.0"
+VERSION="2.1.0"
 ARCH="all"
 TMPDIR="./build/${PKGNAME}_${VERSION}"
 
@@ -29,7 +29,7 @@ cp -r ./src "$TMPDIR/usr/share/$PKGNAME/"
 cp -r ./lib "$TMPDIR/usr/share/$PKGNAME/"
 
 # Compile src in bin
-gcc -o "$TMPDIR/usr/bin/pyram" "$TMPDIR/usr/share/$PKGNAME/src/pyram.c"
+gcc -O3 -march=native -Wall -Wextra -o "$TMPDIR/usr/bin/pyram" "$TMPDIR/usr/share/$PKGNAME/src/pyram.c" && strip "$TMPDIR/usr/bin/pyram"
 
 # Create control file
 cat > "$TMPDIR/DEBIAN/control" << EOF

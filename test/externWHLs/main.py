@@ -31,11 +31,13 @@ Running a command based on this you will have to use the same import style:
 
 # NumPy is pre-installed in PyRAM, but type: ignore its neccessary to avoid vs code issues.
 
-import numpy as np # type: ignore
+from typing import Any
+
+import numpy as np  # type: ignore
 
 # Using matplotlib normally because I'm copying the code to the same folder as the matplotlib itself.
 
-from matplotlib import pyplot as plt # type: ignore
+from matplotlib import pyplot as plt  # type: ignore
 
 
 def test_DataGenerator_sine_wave():
@@ -47,12 +49,12 @@ def test_DataGenerator_sine_wave():
     generated sine wave is approximately 2.
     """
     gen = DataGenerator(n_points=50)
-    x, y = gen.sine_wave(freq=3, amp=2)
+    x, y = gen.sine_wave(freq=3, amp=2)  # type: ignore
 
-    assert len(x) == 50
-    assert len(y) == 50
+    assert len(x) == 50  # type: ignore
+    assert len(y) == 50  # type: ignore
     # Check amplitude and frequency
-    assert abs(max(y)) - 2 < 1e-6
+    assert abs(max(y)) - 2 < 1e-6  # type: ignore
 
 
 def test_DataGenerator_cosine_wave():
@@ -67,12 +69,11 @@ def test_DataGenerator_cosine_wave():
         AssertionError: If any of the assertions fail.
     """
 
-
     gen = DataGenerator(n_points=30)
-    x, y = gen.cosine_wave(freq=1.5, amp=0.5)
-    assert len(x) == 30
-    assert len(y) == 30
-    assert abs(max(y)) - 0.5 < 1e-6
+    x, y = gen.cosine_wave(freq=1.5, amp=0.5)  # type: ignore
+    assert len(x) == 30  # type: ignore
+    assert len(y) == 30  # type: ignore
+    assert abs(max(y)) - 0.5 < 1e-6  # type: ignore
 
 
 def test_DataGenerator_random_data():
@@ -83,16 +84,15 @@ def test_DataGenerator_random_data():
     - The y values are within the range [0, 1].
     """
 
-
     gen = DataGenerator(n_points=10)
-    x, y = gen.random_data()
-    assert len(x) == 10
-    assert len(y) == 10
+    x, y = gen.random_data()  # type: ignore
+    assert len(x) == 10  # type: ignore
+    assert len(y) == 10  # type: ignore
     # y should be between 0 and 1
-    assert (y >= 0).all() and (y <= 1).all()
+    assert (y >= 0).all() and (y <= 1).all()  # type: ignore
 
 
-def test_Plotter_methods(monkeypatch):
+def test_Plotter_methods(monkeypatch: Any):
     """
     Test the methods of the Plotter class to ensure that plot, scatter, legend, and show are called as expected.
     This test uses monkeypatching to replace the actual plotting methods with lambdas that record their invocation.
@@ -105,18 +105,22 @@ def test_Plotter_methods(monkeypatch):
         monkeypatch: pytest fixture for safely patching and restoring objects during the test.
     """
 
-
     plotter = Plotter(title="Test")
     called = {}
 
-    monkeypatch.setattr(plotter.ax, "plot", lambda *a, **k: called.setdefault("plot", True))
-    monkeypatch.setattr(plotter.ax, "scatter", lambda *a, **k: called.setdefault("scatter", True))
-    monkeypatch.setattr(plotter.ax, "legend", lambda *a, **k: called.setdefault("legend", True))
-    monkeypatch.setattr("matplotlib.pyplot.show", lambda: called.setdefault("show", True))
+    monkeypatch.setattr(plotter.ax, "plot", lambda *a, ** # type: ignore
+                        k: called.setdefault("plot", True))  # type: ignore
+    monkeypatch.setattr(plotter.ax, "scatter", lambda *a, ** # type: ignore
+                        k: called.setdefault("scatter", True))  # type: ignore
+    monkeypatch.setattr(plotter.ax, "legend", lambda *a, ** # type: ignore
+                        k: called.setdefault("legend", True))  # type: ignore
+    monkeypatch.setattr("matplotlib.pyplot.show",
+                        # type: ignore
+                        lambda: called.setdefault("show", True)) # type: ignore
     x, y = [0, 1], [1, 2]
 
-    plotter.plot(x, y, label="lbl", style='-')
-    plotter.scatter(x, y, label="lbl", color='r')
+    plotter.plot(x, y, label="lbl", style='-')  # type: ignore
+    plotter.scatter(x, y, label="lbl", color='r')  # type: ignore
     plotter.show()
 
     assert called["plot"]
@@ -125,7 +129,7 @@ def test_Plotter_methods(monkeypatch):
     assert called["show"]
 
 
-def test_MultiPlotter_methods(monkeypatch):
+def test_MultiPlotter_methods(monkeypatch: Any):
     """
     Test the main methods of the MultiPlotter class to ensure they call the appropriate matplotlib functions.
     This test uses monkeypatching to replace the plotting, legend, title, layout, and show methods with mocks
@@ -138,22 +142,30 @@ def test_MultiPlotter_methods(monkeypatch):
         monkeypatch: pytest fixture for dynamically patching objects and functions during the test.
     """
 
-
     multi = MultiPlotter(nrows=1, ncols=2)
     called = {}
 
-    for ax in multi.axes:
+    for ax in multi.axes:  # type: ignore
 
-        monkeypatch.setattr(ax, "plot", lambda *a, **k: called.setdefault("plot", True))
-        monkeypatch.setattr(ax, "legend", lambda *a, **k: called.setdefault("legend", True))
-        monkeypatch.setattr(ax, "set_title", lambda t: called.setdefault("set_title", t))
+        monkeypatch.setattr(ax, "plot", lambda *a, ** # type: ignore
+                            k: called.setdefault("plot", True))  # type: ignore
+        monkeypatch.setattr(ax, "legend", lambda *a, ** # type: ignore
+                            k: called.setdefault("legend", True)) # type: ignore
+        monkeypatch.setattr(ax, "set_title", 
+            lambda t: called.setdefault(  # type: ignore
+                "set_title", t  # type: ignore
+            ))
 
-    monkeypatch.setattr("matplotlib.pyplot.tight_layout", lambda: called.setdefault("tight_layout", True))
-    monkeypatch.setattr("matplotlib.pyplot.show", lambda: called.setdefault("show", True))
+    monkeypatch.setattr("matplotlib.pyplot.tight_layout", 
+        lambda: called.setdefault( # type: ignore
+            "tight_layout", True
+        ))  
+    monkeypatch.setattr("matplotlib.pyplot.show",
+                        lambda: called.setdefault("show", True)) # type: ignore
 
     x, y = [0, 1], [1, 2]
-    multi.plot_on(0, x, y, label="lbl", style='-')
-    multi.set_title(0, "Title")
+    multi.plot_on(0, x, y, label="lbl", style='-')  # type: ignore
+    multi.set_title(0, "Title")  # type: ignore
     multi.show()
 
     assert called["plot"]
@@ -163,15 +175,16 @@ def test_MultiPlotter_methods(monkeypatch):
     assert called["show"]
 
 
-def test_main_runs(monkeypatch):
+def test_main_runs(monkeypatch: Any):
     # Patch plt.show to avoid opening windows
 
     monkeypatch.setattr(plt, "show", lambda: None)
     main()
 
+
 class DataGenerator:
 
-    def __init__(self, n_points=100):
+    def __init__(self, n_points: int = 100):
         """
         Initializes the object with a specified number of points.
         Parameters
@@ -182,7 +195,7 @@ class DataGenerator:
 
         self.n_points = n_points
 
-    def sine_wave(self, freq=1.0, amp=1.0):
+    def sine_wave(self, freq: float = 1.0, amp: float = 1.0) -> tuple[Any, Any]:
         """
         Generates a sine wave based on the specified frequency and amplitude.
         Parameters:
@@ -194,12 +207,12 @@ class DataGenerator:
                 - y (numpy.ndarray): Array of sine values corresponding to x, scaled by amplitude and frequency.
         """
 
-        x = np.linspace(0, 2 * np.pi, self.n_points)
-        y = amp * np.sin(freq * x)
+        x = np.linspace(0, 2 * np.pi, self.n_points)  # type: ignore
+        y = amp * np.sin(freq * x)  # type: ignore
 
-        return x, y
+        return x, y  # type: ignore
 
-    def cosine_wave(self, freq=1.0, amp=1.0):
+    def cosine_wave(self, freq: float = 1.0, amp: float = 1.0) -> tuple[Any, Any]:
         """
         Generate a cosine wave.
         Parameters:
@@ -211,12 +224,12 @@ class DataGenerator:
                 - y (ndarray): Array of cosine values corresponding to x.
         """
 
-        x = np.linspace(0, 2 * np.pi, self.n_points)
-        y = amp * np.cos(freq * x)
+        x = np.linspace(0, 2 * np.pi, self.n_points)  # type: ignore
+        y = amp * np.cos(freq * x)  # type: ignore
 
-        return x, y
+        return x, y  # type: ignore
 
-    def random_data(self):
+    def random_data(self) -> tuple[Any, Any]:
         """
         Generates random y-data and corresponding x-data for plotting or analysis.
         Returns:
@@ -225,24 +238,25 @@ class DataGenerator:
                 - y (numpy.ndarray): Random values between 0 and 1 with length `self.n_points`.
         """
 
-        x = np.linspace(0, 10, self.n_points)
-        y = np.random.rand(self.n_points)
+        x = np.linspace(0, 10, self.n_points)  # type: ignore
+        y = np.random.rand(self.n_points)  # type: ignore
 
-        return x, y
+        return x, y  # type: ignore
+
 
 class Plotter:
 
-    def __init__(self, title="Plot"):
+    def __init__(self, title: str = "Plot"):
         """
         Initializes the plot with a figure and axes, and sets the title.
         Parameters:
             title (str): The title of the plot. Defaults to "Plot".
         """
 
-        self.fig, self.ax = plt.subplots()
-        self.ax.set_title(title)
+        self.fig, self.ax = plt.subplots()  # type: ignore
+        self.ax.set_title(title)  # type: ignore
 
-    def plot(self, x, y, label=None, style='-'):
+    def plot(self, x: float | int, y: float | int, label: str | None = None, style: str = '-'):
         """
         Plots the given x and y data on the current axes.
         Parameters:
@@ -254,9 +268,9 @@ class Plotter:
             None
         """
 
-        self.ax.plot(x, y, style, label=label)
+        self.ax.plot(x, y, style, label=label)  # type: ignore
 
-    def scatter(self, x, y, label=None, color='r'):
+    def scatter(self, x: float | int, y: float | int, label: str | None = None, color: str = 'r'):
         """
         Plots a scatter plot on the current axes.
         Parameters:
@@ -268,7 +282,7 @@ class Plotter:
             None
         """
 
-        self.ax.scatter(x, y, label=label, color=color)
+        self.ax.scatter(x, y, label=label, color=color)  # type: ignore
 
     def show(self):
         """
@@ -276,12 +290,13 @@ class Plotter:
         This method adds a legend to the current axes and then shows the plot window.
         """
 
-        self.ax.legend()
-        plt.show()
+        self.ax.legend()  # type: ignore
+        plt.show()  # type: ignore
+
 
 class MultiPlotter:
 
-    def __init__(self, nrows=1, ncols=2, figsize=(10, 4)):
+    def __init__(self, nrows: int = 1, ncols: int = 2, figsize: tuple[int, int] = (10, 4)):
         """
         Initializes the object by creating a matplotlib figure and axes.
         Parameters:
@@ -293,9 +308,10 @@ class MultiPlotter:
             axes (numpy.ndarray or matplotlib.axes.Axes): The created axes or array of axes.
         """
 
-        self.fig, self.axes = plt.subplots(nrows, ncols, figsize=figsize)
+        self.fig, self.axes = plt.subplots( # type: ignore
+            nrows, ncols, figsize=figsize)
 
-    def plot_on(self, idx, x, y, label=None, style='-'):
+    def plot_on(self, idx: int, x: Any, y: Any, label: str | None = None, style: str = '-'):
         """
         Plots data on the specified axes.
         Parameters:
@@ -308,11 +324,11 @@ class MultiPlotter:
             None
         """
 
-        ax = self.axes[idx]
-        ax.plot(x, y, style, label=label)
-        ax.legend()
+        ax = self.axes[idx]  # type: ignore
+        ax.plot(x, y, style, label=label)  # type: ignore
+        ax.legend()  # type: ignore
 
-    def set_title(self, idx, title):
+    def set_title(self, idx: int, title: str):
         """
         Set the title of the subplot at the specified index.
         Parameters:
@@ -320,7 +336,7 @@ class MultiPlotter:
             title (str): The title to set for the specified subplot.
         """
 
-        self.axes[idx].set_title(title)
+        self.axes[idx].set_title(title)  # type: ignore
 
     def show(self):
         """
@@ -328,8 +344,9 @@ class MultiPlotter:
         This method adjusts subplot parameters to give specified padding and then renders the figure window.
         """
 
-        plt.tight_layout()
-        plt.show()
+        plt.tight_layout()  # type: ignore
+        plt.show()  # type: ignore
+
 
 def main():
     """
@@ -370,6 +387,8 @@ def main():
     multi.set_title(1, "Cosine Wave")
     multi.show()
 
+
 if __name__ == "__main__":
 
     main()
+    exit(0)

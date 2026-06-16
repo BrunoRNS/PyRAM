@@ -20,30 +20,28 @@
 
 try:
 
-	from modules.module1.main import foo1, foo2, hello
+    from modules import *
 
-	myFoo = foo1()
+    myFoo = foo1Mod1()
 
-	if type(myFoo) != foo1:
+    if type(myFoo) != foo1Mod1:
 
-		raise Exception("Failure testing module 1")
+        raise Exception("Failure testing module 1")
 
-	from modules.module2.classes import foo1 as foo1Mod2
+    if foo2Mod1.fooHello() != foo1Mod2.fooHello():
 
-	if foo2.fooHello() != foo1Mod2.fooHello():
+        raise Exception(
+            "Failure comparing foo2 and foo1 in module 2 and module 1 respectively")
 
-		raise Exception("Failure testing module 2 in classes")
+    if helloMod2() != helloMod1():
 
-	from modules.module2.functions import hello as helloMod2
-
-	if helloMod2() != hello():
-
-		raise Exception("Failure testing module 2 in functions")
+        raise Exception(
+            "Failure comparing hello in module 2 and module 1 respectively")
 
 
 except Exception as e:
 
-	raise Exception(f"Failure in {e}")
+    raise Exception(f"Failure in {e}")
 
 
 print("All modules tests worked successfully")
